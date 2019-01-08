@@ -10,6 +10,7 @@ file, or visit the `EasyInstall home page`__.
 __ https://setuptools.readthedocs.io/en/latest/easy_install.html
 
 """
+from __future__ import print_function
 
 from glob import glob
 from distutils.util import get_platform
@@ -40,12 +41,13 @@ import subprocess
 import shlex
 import io
 
+from sysconfig import get_config_vars, get_path
+
 from setuptools.extern import six
 from setuptools.extern.six.moves import configparser, map
 
 from setuptools import Command
 from setuptools.sandbox import run_setup
-from setuptools.py31compat import get_path, get_config_vars
 from setuptools.py27compat import rmtree_safe
 from setuptools.command import setopt
 from setuptools.archive_util import unpack_archive
@@ -61,6 +63,8 @@ from pkg_resources import (
     VersionConflict, DEVELOP_DIST,
 )
 import pkg_resources.py31compat
+
+__metaclass__ = type
 
 # Turn on PEP440Warnings
 warnings.filterwarnings("default", category=pkg_resources.PEP440Warning)
@@ -93,7 +97,7 @@ def samefile(p1, p2):
 
 if six.PY2:
 
-    def _to_ascii(s):
+    def _to_bytes(s):
         return s
 
     def isascii(s):
@@ -104,8 +108,8 @@ if six.PY2:
             return False
 else:
 
-    def _to_ascii(s):
-        return s.encode('ascii')
+    def _to_bytes(s):
+        return s.encode('utf8')
 
     def isascii(s):
         try:
@@ -802,7 +806,7 @@ class easy_install(Command):
         if is_script:
             body = self._load_template(dev_path) % locals()
             script_text = ScriptWriter.get_header(script_text) + body
-        self.write_script(script_name, _to_ascii(script_text), 'b')
+        self.write_script(script_name, _to_bytes(script_text), 'b')
 
     @staticmethod
     def _load_template(dev_path):
@@ -2049,7 +2053,7 @@ class WindowsCommandSpec(CommandSpec):
     split_args = dict(posix=False)
 
 
-class ScriptWriter(object):
+class ScriptWriter:
     """
     Encapsulates behavior around writing entry point scripts for console and
     gui apps.

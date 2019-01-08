@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 #-:-:-:-:-:-:-:-:-:-:-:-:#
@@ -7,15 +7,14 @@
 
 #Author: @_tID
 #This module requires TIDoS Framework
-#https://github.com/theInfectedDrake/TIDoS-Framework 
+#https://github.com/0xInfection/TIDoS-Framework
 
+from __future__ import print_function
 import time
 import PIL.ExifTags
 from PIL.ExifTags import TAGS, GPSTAGS
 from PIL import Image
-from pyexiv2 import ImageMetadata, ExifTag
-from colors import *
-
+from core.Core.colors import *
 from collections import namedtuple
 import os
 
@@ -48,7 +47,7 @@ def gps(exif):
         Lng = Wmult * (Wdeg + (Wmin + Wsec/60.0)/60.0)
         exif['GPSInfo'] = {"Lat" : Lat, "Lng" : Lng}
 
- 
+
 def exif1meta(image_path):
 
     ret = {}
@@ -61,41 +60,34 @@ def exif1meta(image_path):
                 ret[decoded] = value
     gps(ret)
     return ret
-            
+
 def exif3meta(image_path):
 
-    print GR+' [*] Reading METADATA info...'
-    metadata = ImageMetadata(image_path)
-    metadata.read()
-    print O+' [!] Found '+GR+str(len(metadata.exif_keys))+O+' keys...'
-    for item in metadata.exif_keys:
-	    tag = metadata[item]
-	    print C+' [+] '+str(tag).split('[')[0]+B+' ['+str(tag).split('[')[1].split(']')[0]+'] = '+GR+str(tag).split('=')[1].strip()
-	    time.sleep(0.2)
+    print(GR+'\n [*] Reading METADATA info...')
+    for tag, value in Image.open(image_path)._getexif().iteritems():
+        print(O+' [+] '+str(TAGS.get(tag))+' : '+C+str(value))
 
 def imgext():
 
-    print R+'\n    ============================='
-    print R+'     I M A G E   A N A L Y S I S'
-    print R+'    =============================\n'
+    print(R+'\n    =============================')
+    print(R+'     I M A G E   A N A L Y S I S')
+    print(R+'    =============================\n')
     name = raw_input(O+' [#] Enter path to image file :> ')
 
     if os.path.exists(name):
-            print GR+" [+] Metadata for file: %s " %(name)
-            try:
-		print O+' [!] Extracting METADATA info...\n'
-		time.sleep(0.7)
-                exifData = {}
-                exif = exif1meta(name)
-                for metadata in exif:
-                    print G+" [+] "+str(metadata)+O+ " - Value :"+C+" %s " %(str(exif[metadata]))
-		    time.sleep(0.1)
-		print '\n'
-                exif3meta(name)
+        print(GR+" [+] Metadata for file: %s " %(name))
+        try:
+            print(O+' [!] Extracting METADATA info...\n')
+            time.sleep(0.7)
+            exifData = {}
+            exif = exif1meta(name)
+            for metadata in exif:
+                print(G+" [+] "+str(metadata)+O+ " - Value :"+C+" %s " %(str(exif[metadata])))
+                time.sleep(0.1)
+            exif3meta(name)
 
-            except Exception as e:
-                print R+' [-] Caught Exception : '+str(e)
+        except Exception as e:
+            print(R+' [-] Caught Exception : '+str(e))
     else:
-	print R+' [-] No such file/directory present...'
-    print G+'\n [+] Forensic Image Analysis Done!\n'
-
+        print(R+' [-] No such file/directory present...')
+    print(G+'\n [+] Forensic Image Analysis Done!\n')

@@ -7,16 +7,15 @@
    Tree Structure
   ================
 
- > TIDoS has 4 phases as below:
+ > TIDoS has 5 main phases as below:
 
     - Reconnaissance & OSINT
     - Scanning and Enumeration
     - Vulnerability Analysis
-    - Exploitation (presently in beta phase)
+    - Exploitation Stuff
+    - Auxillary Modules
 
-
-
- > TIDoS has 13 sub-phases as below:
+ > TIDoS has 14 sub-phases as below:
 
   * Reconnaissance (OSINT)
 	- Active Reconnaissance
@@ -24,22 +23,18 @@
 	- Information Disclosure
 
   * Scanning and Enumeration
-	- WAF Analysis
 	- Various Port Scanning Techniques
 	- Preloaded moduled NMap
-	- Crawlers (Depth 1 and 2)
+	- Crawlering and Enumeration
 
   * Vulnerability Analysis
+  	- Top Priority Bugs
 	- Server-based Misconfigurations
-	- Serious Vulnerabilities
-	- Auxillaries
-
-  * Exploitation (beta)
-	- ShellShock
  
+  * Auxillaries  
+  * Exploitation (beta)
 
-
- > TIDoS has 95 modules as the whole, so on expanding:
+ > TIDoS has 108 modules as the whole, so on expanding:
 
 TIDoS Framework presently supports the following: `and is under active development`
 
@@ -90,7 +85,9 @@ TIDoS Framework presently supports the following: `and is under active developme
 		    - Common Backup Locations `.bak, .db, etc.`
 		    - Common Password Locations ` .pgp, .skr, etc.`
 		    - Common Proxy Path Configs. `.pac, etc.`
+		    - Multiple Index Paths `index, index1, etc.`
 		    - Common Dot Files `.htaccess, .apache, etc`
+		    - Common Logfile Locations `.log, .changelog, etc`
 
 	+ Information Disclosure
 	    - Credit Cards Disclosure `If Plaintext`
@@ -108,14 +105,15 @@ TIDoS Framework presently supports the following: `and is under active developme
 	    - TCP SYN Scan `Highly reliable`
 	    - TCP Connect Scan `Highly Reliable`
 	    - XMAS Flag Scan `Reliable Only in LANs`
-	    - Fin Flag Scan `Reliable Only in LANs`
+	    - FIN Flag Scan `Reliable Only in LANs`
 	    - Port Service Detector
 	+ Web Technology Enumeration `Absolute`
+	+ Complete SSL Enumeration `Absolute`
 	+ Operating System Fingerprinting `IMPROVED`
 	+ Banner Grabbing of Services `via Open Ports`
 	+ Interactive Scanning with NMap `16 preloaded modules`
-	+ Enumeration Domain-Linked IPs `Using CENSYS Database`
-	+ Crawlers
+	+ Internet Wide Servers Scan `Using CENSYS Database`
+	+ Web and Links Crawlers
 	    - Depth 1 `Indexed Uri Crawler`
 	    - Depth 2 `Single Page Crawler`
 	    - Depth 3 `Web Link Crawler`
@@ -132,7 +130,7 @@ TIDoS Framework presently supports the following: `and is under active developme
 		- `X-FRAME-OPTIONS` Header Checks
 	+ Security on Cookies
 		- `HTTPOnly` Flag
-		- `Secure` Flag
+		- `Secure` Flag on Cookies
 	+ Cloudflare Misconfiguration Check
 		- DNS Misconfiguration Checks
 		- Online Database Lookup `For Breaches`
@@ -142,7 +140,7 @@ TIDoS Framework presently supports the following: `and is under active developme
 		- Missing `SPF` Records
 		- Missing `DMARC` Records
 	+ Host Header Injection
-		- Port Based `Over HTTP 80`
+		- Port Based `Web Socket Based`
 		- `X-Forwarded-For` Header Injection
 	+ Security Headers Analysis `Live Capture`
 	+ Cross-Site Tracing `HTTP TRACE Method`
@@ -174,6 +172,7 @@ TIDoS Framework presently supports the following: `and is under active developme
 	+ LDAP Injection `Parameter Based`
 	+ HTML Injection `Parameter Based`
 	+ Bash Command Injection `ShellShock`
+	+ Apache Struts Shock `Apache RCE`
 	+ XPATH Injection `Parameter Based`
 	+ Cross-Site Scripting `IMPROVED`
 	    - Cookie Value Based
@@ -181,8 +180,8 @@ TIDoS Framework presently supports the following: `and is under active developme
 	    - User-Agent Value Based
 	    - Parameter Value Based `Manual`
 	+ Unvalidated URL Forwards `Open Redirect`
-	+ PHP Code Injection `Windows + Linux`
-	+ HTTP Response Splitting `CRLF Injection`
+	+ PHP Code Injection `Windows + Linux RCE`
+	+ CRLF Injection `HTTP Response Splitting`
 	    - User-Agent Value Based
 	    - Parameter value Based `Manual`
 	+ Sub-domain Takeover `50+ Services`
@@ -210,4 +209,4 @@ TIDoS Framework presently supports the following: `and is under active developme
 
 - __Exploitation__ `purely developmental`
 
-	+ ShellShock
+	+ ShellShock	
